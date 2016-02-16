@@ -32,7 +32,7 @@ void setup() {
   DDRC = 0xFF;
   // put your setup code here, to run once:
   // Display the value 12 on the 7-segment display in hex(0xC)
-  PORTC = sevenSegmentControl(12);
+  PORTC = 0xFF;//sevenSegmentControl(8);
 }
 
 void loop() {

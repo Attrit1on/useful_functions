@@ -1,11 +1,11 @@
 /*  7-Segment Display Control
  *  
  *  File:       seven_segment_control.ino
- *  Version:    1.00
+ *  Version:    1.01
  *  Author:     Trey Harrison (CWID: 11368768)
  *  Email:      ntharrison@crimson.ua.edu
  *  Created:    08 February, 2016
- *  Modified:   08 February, 2016
+ *  Modified:   12 February, 2016
  *  
  *  This is a useful function for controlling a 7-segment display tied
  *  to a single IO register in one of the arduino platforms.
@@ -29,6 +29,7 @@
  */
  
 void setup() {
+  DDRC = 0xFF;
   // put your setup code here, to run once:
   // Display the value 12 on the 7-segment display in hex(0xC)
   PORTC = sevenSegmentControl(12);
@@ -51,39 +52,42 @@ void loop() {
  * case, the pin field corresponds to the appropriate pins needed to 
  * correctly utilize PORTC of the Arduino Mega platform.
  * 
- * ---THIS IS FOR COMMON CATHODE DISPLAYS---
+ * ---THIS ONLY WORKS FOR COMMON CATHODE DISPLAYS---
  * 
  *   PORTC[0:6] => Digital Pins 37:31
  *   ---------------------------
  *   |segment    port_bit   pin|
- *   |   A          0       37 |     segments
- *   |   B          1       36 |     |--A--|
- *   |   C          2       35 |     F     B
- *   |   D          3       34 |     |--G--|
- *   |   E          4       33 |     E     C
- *   |   F          5       32 |     |--D--|
- *   |   G          6       31 |
+ *   |   o          7       30 |     segments
+ *   |   G          6       31 |     |--A--|
+ *   |   F          5       32 |     F     B
+ *   |   E          4       33 |     |--G--|
+ *   |   D          3       34 |     E     C
+ *   |   C          2       35 |     |--D--| o
+ *   |   B          1       36 |
+ *   |   A          0       37 |
  *   ---------------------------
  *
  */
 uint8_t sevenSegmentControl(uint8_t displayVal) {
   switch (displayVal) {
-    case 0:  return 0x7E; break;
-    case 1:  return 0x30; break;
-    case 2:  return 0x6D; break;
-    case 3:  return 0x79; break;
-    case 4:  return 0x33; break;
-    case 5:  return 0x5B; break;
-    case 6:  return 0x1F; break;
-    case 7:  return 0x70; break;
+    case 0:  return 0x3F; break;
+    case 1:  return 0x06; break;
+    case 2:  return 0x5B; break;
+    case 3:  return 0x4F; break;
+    case 4:  return 0x66; break;
+    case 5:  return 0x6D; break;
+    case 6:  return 0x7D; break;
+    case 7:  return 0x07; break;
     case 8:  return 0x7F; break;
-    case 9:  return 0x73; break;
+    case 9:  return 0x6F; break;
     case 10: return 0x77; break;
-    case 11: return 0x7F; break;
-    case 12: return 0x4E; break;
-    case 13: return 0x7E; break;
-    case 14: return 0x4F; break;
-    case 15: return 0x47; break;
+    case 11: return 0x7C; break;
+    case 12: return 0x39; break;
+    case 13: return 0x5E; break;
+    case 14: return 0x79; break;
+    case 15: return 0x71; break;
+    case 20: return 0x80; break;
+    case 30: return 0x49; break;
     default: return 0x00; break;
   }
 }
